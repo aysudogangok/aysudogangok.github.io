@@ -1,36 +1,399 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <title>Aysu Doğan Gök</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aysu Doğan Gök | Dashboard</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      text-align: center;
-      padding-top: 100px;
+    :root{
+      /* Pastel tema */
+      --bg: #fbfbfd;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --border: rgba(17,24,39,.10);
+
+      --p1: #dbeafe; /* pastel mavi */
+      --p2: #fce7f3; /* pastel pembe */
+      --p3: #dcfce7; /* pastel yeşil */
+
+      --accent: #4f46e5;      /* indigo */
+      --accent-2: #7c3aed;    /* mor */
+      --shadow: 0 12px 35px rgba(17,24,39,.08);
+      --radius: 18px;
     }
-    h1 { font-size: 40px; }
-    p { font-size: 18px; color: #555; }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      font-size: 20px;
-      text-decoration: none;
+
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; background:var(--bg); color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif; }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(1120px, 92vw); margin:0 auto; }
+
+    /* Top gradient background */
+    .bg-wash{
+      background:
+        radial-gradient(900px 350px at 20% 0%, var(--p1), transparent 60%),
+        radial-gradient(900px 350px at 80% 0%, var(--p2), transparent 60%),
+        radial-gradient(900px 350px at 50% 40%, var(--p3), transparent 60%);
+      padding-bottom: 24px;
+    }
+
+    /* Navbar */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(251,251,253,.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .dot{
+      width: 12px; height:12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 6px 14px rgba(79,70,229,.25);
+    }
+    .nav-links{
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav-links a{
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      transition: all .15s ease;
+      border: 1px solid transparent;
+    }
+    .nav-links a:hover{
+      color: var(--ink);
+      border-color: var(--border);
+      background: rgba(255,255,255,.7);
+    }
+    .nav-cta{
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
       color: white;
-      background: #222;
-      padding: 10px 20px;
-      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 20px rgba(79,70,229,.20);
+      border: none;
+      cursor: pointer;
     }
-    a:hover {
-      background: #444;
+    .nav-cta:hover{ filter: brightness(1.03); }
+
+    /* Hero */
+    .hero{
+      padding: 40px 0 10px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-main{
+      padding: 28px;
+      position: relative;
+      overflow:hidden;
+    }
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(255,255,255,.7);
+    }
+    .hero-title{
+      margin: 14px 0 6px;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.6px;
+    }
+    .hero-sub{
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 58ch;
+    }
+    .hero-actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      margin-top: 18px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      transition: all .15s ease;
+      font-size: 14px;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn.primary{
+      color:white;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    .btn.muted{
+      color: var(--ink);
+      background: rgba(255,255,255,.75);
+    }
+
+    .hero-side{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .kpi{
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.75);
+    }
+    .kpi .label{ color: var(--muted); font-size: 12px; font-weight: 700; }
+    .kpi .value{ font-size: 16px; font-weight: 800; margin-top: 4px; }
+    .kpi .note{ color: var(--muted); font-size: 12px; margin-top: 6px; line-height: 1.4; }
+
+    /* Sections */
+    section{ padding: 22px 0; }
+    .section-title{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+    .section-sub{ margin: 0 0 18px; color: var(--muted); }
+
+    /* Dashboard embed */
+    .embed-wrap{
+      overflow:hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: white;
+    }
+    iframe{
+      width:100%;
+      height: 70vh;
+      min-height: 560px;
+      border:0;
+      display:block;
+    }
+
+    /* Grid cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .mini{
+      padding: 18px;
+    }
+    .mini h3{ margin: 0 0 8px; font-size: 15px; }
+    .mini p{ margin:0; color: var(--muted); line-height: 1.55; font-size: 14px; }
+
+    /* Footer */
+    footer{
+      padding: 30px 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-inner{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
     }
   </style>
 </head>
+
 <body>
-  <h1>Aysu Doğan Gök</h1>
-  <p>Veri analizi • Interaktif dashboard • Mekânsal analiz</p>
+  <div class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">
+        <span class="dot"></span>
+        <span>Aysu Doğan Gök</span>
+      </a>
 
-  <a href="dashboard.html">Dashboard</a>
+      <div class="nav-links">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#haritalar">Haritalar</a>
+        <a href="#projeler">Projeler</a>
+        <a href="#hakkimda">Hakkımda</a>
+        <a href="#iletisim">İletişim</a>
+        <a class="nav-cta" href="#dashboard">Canlı Gör</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="bg-wash" id="top">
+    <div class="container hero">
+      <div class="hero-grid">
+        <div class="card hero-main">
+          <div class="tag">Veri analizi • İnteraktif dashboard • Mekânsal analiz</div>
+          <h1 class="hero-title">Kamu verisini anlaşılır hale getiren veri ürünleri</h1>
+          <p class="hero-sub">
+            İl/ilçe ölçeğinde göstergeler, haritalar ve izleme panelleri. Bu sayfa intranet içinde
+            hızlı erişim için tasarlanmıştır.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#dashboard">Dashboard’a Git</a>
+            <a class="btn muted" href="#hakkimda">Hakkımda</a>
+            <a class="btn muted" href="#iletisim">İletişim</a>
+          </div>
+        </div>
+
+        <div class="card hero-side">
+          <div class="kpi">
+            <div class="label">Odak</div>
+            <div class="value">İzmir • İlçe Bazlı Analitik</div>
+            <div class="note">Haritalar + göstergeler + hızlı kıyas.</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Araçlar</div>
+            <div class="value">R • Shiny • Leaflet • Power BI</div>
+            <div class="note">Üretim odaklı, tekrar kullanılabilir bileşenler.</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Güncelleme</div>
+            <div class="value">Veri güncellenince panel güncel</div>
+            <div class="note">Uygulama her açılışta son veriyi okur (kurgunuza göre).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section id="dashboard">
+      <h2 class="section-title">Dashboard</h2>
+      <p class="section-sub">Canlı uygulama aşağıda gömülüdür.</p>
+
+      <div class="embed-wrap">
+        <!-- Shiny app URL'ini buraya koy -->
+        <iframe src="https://aysudogangok.shinyapps.io/kamu_demo_app_fixed/"></iframe>
+      </div>
+    </section>
+
+    <section id="haritalar">
+      <h2 class="section-title">Haritalar</h2>
+      <p class="section-sub">İlçe bazlı SES, havza, yatırım vb. tematik haritalar (geliştiriliyor).</p>
+
+      <div class="grid">
+        <div class="card mini">
+          <h3>SES Isı Haritası</h3>
+          <p>İlçe SES göstergelerini havza poligonlarıyla birleştirip interaktif olarak sunar.</p>
+        </div>
+        <div class="card mini">
+          <h3>Havza Haritası</h3>
+          <p>Havza sınırları ve ilçe kırılımlarıyla hızlı keşif (popup + legend).</p>
+        </div>
+        <div class="card mini">
+          <h3>Göstergeler</h3>
+          <p>Seçilen ilçeye göre KPI kartları, zaman serisi ve karşılaştırmalar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projeler">
+      <h2 class="section-title">Projeler</h2>
+      <p class="section-sub">Kısa açıklama + link mantığında bir portföy alanı.</p>
+
+      <div class="grid">
+        <div class="card mini">
+          <h3>Kamu Gelir–Gider İzleme</h3>
+          <p>İl/ilçe ölçeğinde fonksiyonel ve ekonomik sınıflandırma bazlı analiz.</p>
+        </div>
+        <div class="card mini">
+          <h3>Yatırım Programı Ayrıştırma</h3>
+          <p>Çok illi projelerde paylaştırma mantığıyla “İzmir payı” hesaplama.</p>
+        </div>
+        <div class="card mini">
+          <h3>İZPA Veri Sistemi (MVP)</h3>
+          <p>TÜİK + kurum içi veri + coğrafi katmanları birleştiren sürdürülebilir yapı.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="hakkimda">
+      <h2 class="section-title">Hakkımda</h2>
+      <p class="section-sub">
+        Veri analizi, mekânsal analiz ve interaktif raporlama alanlarında çalışıyorum.
+        Bu sayfa intranet içinde hızlı erişim ve paylaşım için oluşturuldu.
+      </p>
+    </section>
+
+    <section id="iletisim">
+      <h2 class="section-title">İletişim</h2>
+      <p class="section-sub">
+        Kurum içi iletişim bilgilerini buraya yazabilirsin (e-posta, Teams, vs.).
+      </p>
+      <div class="card mini">
+        <h3>İletişim</h3>
+        <p>
+          E-posta: <b>ad.soyad@kurum.gov.tr</b><br/>
+          Teams: <b>@aysu</b>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Aysu Doğan Gök</div>
+        <div>Pastel tema • Basit HTML • Iframe ile gömme</div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
