@@ -66,6 +66,7 @@
       align-items:center;
       gap:10px;
       font-weight: 900;
+      white-space: nowrap;
     }
 
     .dot{
@@ -73,12 +74,14 @@
       height:12px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 6px 14px rgba(79,70,229,.25);
     }
 
     .nav-links{
       display:flex;
       gap: 10px;
       flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
     .nav-links a{
@@ -93,6 +96,7 @@
     .nav-links a:hover{
       color: var(--ink);
       background: rgba(255,255,255,.7);
+      border: 1px solid var(--border);
     }
 
     .hero{
@@ -103,16 +107,18 @@
       margin: 0;
       font-size: clamp(28px, 4vw, 44px);
       font-weight: 950;
+      letter-spacing: -0.4px;
     }
 
     .hero .phd{
       font-weight: 800;
       color: var(--muted);
       margin-top: 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
     }
 
     main{ padding: 20px 0 40px; }
-
     section{ margin: 16px 0; }
 
     .card{
@@ -127,6 +133,7 @@
       padding: 16px 18px;
       border-bottom: 1px solid var(--border);
       font-weight: 900;
+      letter-spacing: -0.2px;
     }
 
     .section-body{
@@ -135,7 +142,7 @@
 
     .about-main{
       margin: 0;
-      line-height: 1.6;
+      line-height: 1.7;
       font-size: 15px;
     }
 
@@ -153,6 +160,7 @@
       border-radius: 999px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,.7);
+      color: #334155;
     }
 
     .btn{
@@ -163,11 +171,12 @@
       border:none;
       color:white;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      transition: all .15s ease;
+      transition: transform .15s ease, filter .15s ease;
     }
 
     .btn:hover{
       transform: translateY(-1px);
+      filter: brightness(1.02);
     }
 
     iframe{
@@ -175,6 +184,7 @@
       height:72vh;
       min-height:560px;
       border:0;
+      border-radius: 14px;
     }
 
     footer{
@@ -185,6 +195,10 @@
       padding-top: 14px;
     }
 
+    @media (max-width: 720px){
+      .nav-inner{ align-items:flex-start; }
+      .nav-links{ justify-content:flex-start; }
+    }
   </style>
 </head>
 
@@ -192,21 +206,22 @@
 
   <div class="nav">
     <div class="container nav-inner">
-      <div class="brand">
+      <a class="brand" href="#top">
         <span class="dot"></span>
         <span>Aysu Doğan Gök</span>
-      </div>
-      <div class="nav-links">
+      </a>
+
+      <nav class="nav-links">
         <a href="#hakkimda">Hakkımda</a>
         <a href="#cv">CV</a>
         <a href="#iletisim">İletişim</a>
         <a href="#projeler">Projeler</a>
         <a href="#dashboard">Dashboard</a>
-      </div>
+      </nav>
     </div>
   </div>
 
-  <div class="bg-wash">
+  <div class="bg-wash" id="top">
     <div class="container hero">
       <h1>Aysu Doğan Gök</h1>
       <div class="phd">Ph.D</div>
@@ -219,12 +234,12 @@
       <div class="section-head">Hakkımda</div>
       <div class="section-body">
         <p class="about-main">
-          Veri bilimci ve ekonomistim. TÜBİTAK 2214-A bursu kapsamında 2022–2023 döneminde 
-          North Carolina State University’de Misafir Araştırmacı olarak bulundum. 
-          2026 yılında doktora derecemi tamamladım. Doktora tezimi, Türkiye ve BRICS ülkelerinin 
-          hisse senedi endeks fiyatlarının makine öğrenmesi ve derin öğrenme yöntemleri ile 
-          geleneksel ekonometrik modeller karşılaştırılarak tahmin edilmesi üzerine yazdım. 
-          Hâlen İzmir Planlama Ajansı (İZPA)’nda Ekonomist olarak görev yapıyor; 
+          Veri bilimci ve ekonomistim. TÜBİTAK 2214-A bursu kapsamında 2022–2023 döneminde
+          North Carolina State University’de Misafir Araştırmacı olarak bulundum.
+          2026 yılında doktora derecemi tamamladım. Doktora tezimi, Türkiye ve BRICS ülkelerinin
+          hisse senedi endeks fiyatlarının makine öğrenmesi ve derin öğrenme yöntemleri ile
+          geleneksel ekonometrik modeller karşılaştırılarak tahmin edilmesi üzerine yazdım.
+          Hâlen İzmir Planlama Ajansı (İZPA)’nda Ekonomist olarak görev yapıyor;
           makroekonomik göstergeler üzerinden mekânsal ve veri temelli analizler geliştiriyorum.
         </p>
 
@@ -232,7 +247,6 @@
           <span class="pill">Veri Analizi</span>
           <span class="pill">Mekânsal Ekonometrik Analiz</span>
           <span class="pill">Zaman Serisi Öngörüsü</span>
-          
         </div>
       </div>
     </section>
@@ -241,7 +255,7 @@
       <div class="section-head">CV</div>
       <div class="section-body">
         <a class="btn"
-          href="mailto:aysudogangok@gmail.com?subject=CV%20Talebi&body=Merhaba%20Aysu%20G%C3%B6k%2C%0A%0ACV%27nizi%20talep%20ediyorum.%0A%0AAd%20Soyad%3A%0AKurum%2F%C3%9Cnvan%3A%0ATalep%20nedeni%3A%0A%0ATe%C5%9Fekk%C3%BCrler." 
+           href="mailto:aysudogangok@gmail.com?subject=CV%20Talebi&body=Merhaba%20Aysu%20G%C3%B6k%2C%0A%0ACV%27nizi%20talep%20ediyorum.%0A%0AAd%20Soyad%3A%0AKurum%2F%C3%9Cnvan%3A%0ATalep%20nedeni%3A%0A%0ATe%C5%9Fekk%C3%BCrler.">
           CV Talep Et
         </a>
       </div>
@@ -260,7 +274,7 @@
     <section id="dashboard" class="card">
       <div class="section-head">Dashboard</div>
       <div class="section-body">
-        <iframe src="https://aysudogangok.shinyapps.io/kamu_demo_app_fixed/"></iframe>
+        <iframe src="https://aysudogangok.shinyapps.io/kamu_demo_app_fixed/" title="Dashboard"></iframe>
       </div>
     </section>
 
